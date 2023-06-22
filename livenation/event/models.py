@@ -17,9 +17,13 @@ class Location(models.Model):
 
 
 class Venue(models.Model):
-    is_livenation_owned = models.BooleanField(default=False)
+    discovery_id = models.CharField(max_length=50) 
+    header_image = models.ForeignKey(Image, on_delete=models.PROTECT)
     location = models.ForeignKey(Location, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
+    is_livenation_owned = models.BooleanField()
+    slug = models.SlugField(null=True, blank=True)
+    tm_id = models.CharField(max_length=50)
     
     def __str__(self):
         return str(self.name)
@@ -62,3 +66,23 @@ class UpSell(models.Model):
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=50)
     url = models.URLField()
+    
+    def __str__(self):
+        return str(self.name)
+
+
+class Genre(models.Model):
+    uid = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return str(self.name)
+
+
+class Artist(models.Model):
+    discovery_id = models.CharField(max_length=50)
+    name = models.CharField(max_length=150)
+    slug = models.SlugField()
+    
+    def __str__(self):
+        return str(self.name)
